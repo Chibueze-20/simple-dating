@@ -8,6 +8,10 @@ const User = new Schema({
   city: { type: String },
   role: { type: String, default: "user" },
   isDeleted: { type: Boolean, default: false },
+  profilePic: { type: String, default: "" },
+  //partner : object id ref user
+  //isworking: true/false default false
+  //profilePic: string
 });
 
 const UserModel = model("Users", User);
