@@ -156,8 +156,12 @@ const marry = async (req, res, next) => {
     const {userId, partnerId} = req.body
     const marry = await Marry(userId, partnerId)
     marry
-    ? Success(res, `User ${userId} is now married to User${partnerId}`, marry)
-    : Failure(res, HTTPStatus.NOT_ACCEPTABLE, "Invalid Input");
+      ? Success(
+          res,
+          `User ${userId} is now married to User ${partnerId}`,
+          marry
+        )
+      : Failure(res, HTTPStatus.NOT_ACCEPTABLE, "Invalid Input");
     return
   } catch (error) {
     next(error)
