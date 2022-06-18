@@ -21,7 +21,11 @@ const Login = async (username, password) => {
 const Marry = async (userId, partnerId) => {
   try {
     console.log(userId, partnerId)
-    const user = await UserModel.findByIdAndUpdate(userId, {partner : partnerId})
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { partner: partnerId },
+      { new: true }
+    );
     console.log(user)
     return user
   } catch (error) {
