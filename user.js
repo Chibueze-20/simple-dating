@@ -8,7 +8,12 @@ const User = new Schema({
   city: { type: String },
   role: { type: String, default: "user" },
   isDeleted: { type: Boolean, default: false },
-});
+  isWorking: { type : Boolean, default : false },
+  partner: { type : Schema.Types.ObjectId, ref : "User" },
+  profilePic: { type : String }
+},
+{ collection : "User" }
+);
 
 const UserModel = model("Users", User);
 

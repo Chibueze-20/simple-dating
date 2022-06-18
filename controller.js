@@ -1,6 +1,6 @@
 const HTTPStatus = require("http-status");
 const jwt = require("jsonwebtoken");
-const { Login, Query, CreateUser, GetById } = require("./repository");
+const { Login, Marry, Query, CreateUser, GetById } = require("./repository");
 const { Roles, Cipher } = require("./constants");
 
 function Success(res, message, data = {}) {
@@ -10,9 +10,7 @@ function Failure(res, code, message, data = {}) {
   res.status(code).json({ message, data });
 }
 function Created(res, data = {}) {
-  res
-    .status(HTTPStatus.CREATED)
-    .json({ message: "Successfully Created", data });
+  res.status(HTTPStatus.CREATED).json({ message: "Successfully Created", data });
 }
 
 const LoginUser = async (req, res, next) => {
@@ -34,6 +32,7 @@ const LoginUser = async (req, res, next) => {
     next(error);
   }
 };
+
 const createUser = async (req, res, next) => {
   try {
     const userObj = req.body;
@@ -47,6 +46,7 @@ const createUser = async (req, res, next) => {
     next(error);
   }
 };
+
 const getCookingWives = async (req, res, next) => {
   try {
     const data = await Query({ canCook: true, role: Roles.User });
@@ -58,6 +58,7 @@ const getCookingWives = async (req, res, next) => {
     next(error);
   }
 };
+
 const getCleaningWives = async (req, res, next) => {
   try {
     const data = await Query({ canClean: true, role: Roles.User });
@@ -69,16 +70,68 @@ const getCleaningWives = async (req, res, next) => {
     next(error);
   }
 };
+
 const getHouseWives = async (req, res, next) => {
   try {
     const data = await Query({
       canCook: true,
       canClean: true,
-      role: Roles.User,
+      role: Roles.User
     });
-    return data.length > 0
+    data.length > 0
       ? Success(res, "Wives found", data)
       : Failure(res, HTTPStatus.NOT_FOUND, "No Wives Available", data);
+      return 
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getWorkingHusbands = async (req, res, next) => {
+  try {
+    const data = await Query({ isWorking: true, role: Roles.Bachelor });
+    data.length > 0
+      ? Success(res, "Husbands found", data)
+      : Failure(res, HTTPStatus.NOT_FOUND, "No Husbands Available", data);
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCookingHusbands = async (req, res, next) => {
+  try {
+    const data = await Query({ canCook: true, role: Roles.Bachelor });
+    data.length > 0
+      ? Success(res, "Husbands found", data)
+      : Failure(res, HTTPStatus.NOT_FOUND, "No Husbands Available", data);
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCleaningHusbands = async (req, res, next) => {
+  try {
+    const data = await Query({ canClean: true, role: Roles.Bachelor });
+    data.length > 0
+      ? Success(res, "Husbands found", data)
+      : Failure(res, HTTPStatus.NOT_FOUND, "No Husbands Available", data);
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllHusbands = async (req, res, next) => {
+  try {
+    const data = await Query({
+      role: Roles.Bachelor
+    });
+    data.length > 0
+      ? Success(res, "Husbands found", data)
+      : Failure(res, HTTPStatus.NOT_FOUND, "No Husbands Available", data);
+    return
   } catch (error) {
     next(error);
   }
@@ -87,15 +140,29 @@ const getHouseWives = async (req, res, next) => {
 const getAllWives = async (req, res, next) => {
   try {
     const data = await Query({
-      role: Roles.User,
+      role: Roles.User
     });
-    return data.length > 0
+    data.length > 0
       ? Success(res, "Wives found", data)
       : Failure(res, HTTPStatus.NOT_FOUND, "No Wives Available", data);
+    return 
   } catch (error) {
     next(error);
   }
 };
+
+const marry = async (req, res, next) => {
+  try {
+    const {userId, partnerId} = req.body
+    const marry = await Marry(userId, partnerId)
+    marry
+    ? Success(res, `User ${userId} is now married to User${partnerId}`, marry)
+    : Failure(res, HTTPStatus.NOT_ACCEPTABLE, "Invalid Input");
+    return
+  } catch (error) {
+    next(error)
+  }
+}
 const getAllUsers = async (req, res, next) => {
   try {
     const data = await Query();
@@ -127,5 +194,10 @@ module.exports = {
   getCleaningWives,
   getHouseWives,
   getAllWives,
+  marry,
+  getAllHusbands,
+  getCleaningHusbands,
+  getWorkingHusbands,
+  getCookingHusbands,
   LoginUser,
 };

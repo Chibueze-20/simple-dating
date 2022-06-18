@@ -1,4 +1,3 @@
-const { trusted } = require("mongoose");
 const { Roles } = require("./constants");
 const Wives = [
   {
@@ -7,6 +6,8 @@ const Wives = [
     canCook: false,
     canClean: false,
     city: "London",
+    partner : null,
+    profilePic : "",
     role: Roles.User,
   },
   {
@@ -15,6 +16,8 @@ const Wives = [
     canCook: true,
     canClean: false,
     city: "Togo",
+    partner : null,
+    profilePic : "",
     role: Roles.User,
   },
   {
@@ -23,6 +26,8 @@ const Wives = [
     canCook: true,
     canClean: true,
     city: "Texas",
+    partner : null,
+    profilePic : "",
     role: Roles.User,
   },
   {
@@ -31,6 +36,8 @@ const Wives = [
     canCook: false,
     canClean: true,
     city: "Lagos",
+    partner : null,
+    profilePic : "",
     role: Roles.User,
   },
   {
@@ -39,6 +46,8 @@ const Wives = [
     canCook: true,
     canClean: true,
     city: "Abuja",
+    partner : null,
+    profilePic : "",
     role: Roles.User,
   },
   {
@@ -47,6 +56,8 @@ const Wives = [
     canCook: false,
     canClean: false,
     city: "Melbourne",
+    partner : null,
+    profilePic : "",
     role: Roles.User,
   },
 ];
@@ -55,16 +66,22 @@ const Husbands = [
     username: "freshBoyLee",
     password: "Password12*",
     canCook: false,
-    canClean: false,
+    canClean: true,
     city: "London",
+    partner : null,
+    profilePic : "",
+    isWorking : true,
     role: Roles.Bachelor,
   },
   {
     username: "mrPaul",
     password: "Password12*",
-    canCook: false,
+    canCook: true,
     canClean: false,
     city: "London",
+    partner : null,
+    profilePic : "",
+    isWorking : false,
     role: Roles.Bachelor,
   },
 ];
@@ -96,5 +113,5 @@ const actions = async () => {
 };
 
 module.exports = {
-  actions,
+  actions
 };

@@ -4,6 +4,7 @@
   "description": "to show the jwt powers",
   "main": "main.js",
   "scripts": {
+    "start": "nodemon main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

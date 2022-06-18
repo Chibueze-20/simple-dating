@@ -18,6 +18,17 @@ const Login = async (username, password) => {
   }
 };
 
+const Marry = async (userId, partnerId) => {
+  try {
+    console.log(userId, partnerId)
+    const user = await UserModel.findByIdAndUpdate(userId, {partner : partnerId})
+    console.log(user)
+    return user
+  } catch (error) {
+    throw error
+  }
+}
+
 const Query = async (query = {}) => {
   try {
     const data = await UserModel.find(query);
@@ -38,6 +49,7 @@ const GetById = async (id) => {
 module.exports = {
   CreateUser,
   Login,
+  Marry,
   Query,
   GetById,
 };

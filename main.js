@@ -13,7 +13,7 @@ mongoose.connect("mongodb://localhost:27017/MongoDating", (e) => {
   console.log("connected");
   seed()
     .then((e) => console.log("Seed users done", e))
-    .catch((err) => console.log("Seed Error", err));
+    .catch((err) => console.log("Seed Error", err.message));
 });
 
 const app = express();
